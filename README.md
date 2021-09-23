@@ -1,6 +1,6 @@
 # QGIS Ribbon
 
-QGIS Ribbon is an open-source plugin based on the wonderful work of [GIAP-PolaMap(lite)](https://github.com/GIAPspzoo/GIAP_PolaMap_lite). It has been cleaned out from all the polish GIAP features just keeping the ribbon.
+QGIS Ribbon is an open-source plugin based on the wonderful work of the polish [GIAP-PolaMap(lite)](https://github.com/GIAPspzoo/GIAP_PolaMap_lite) team. It has been cleaned out from all the polish GIAP features just keeping the ribbon.
 
 The defaut custom styles have been removed in order to keep users settings.
 
