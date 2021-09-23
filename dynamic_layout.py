@@ -12,15 +12,13 @@ from qgis.PyQt.QtWidgets import QWidget, QApplication, QHBoxLayout, \
 from qgis._core import QgsApplication
 from qgis.utils import iface
 
-from .QuickPrint import PrintMapTool
 from .config import Config
 from .CustomMessageBox import CustomMessageBox
-from .OrtoTools import OrtoAddingTool
 from .utils import STANDARD_TOOLS, DEFAULT_TABS, tr
 
 from .select_section import SelectSection
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'giap_dynamic_layout.ui'))
+    os.path.dirname(__file__), 'dynamic_layout.ui'))
 
 
 class Widget(QWidget, FORM_CLASS):
@@ -72,7 +70,7 @@ class Widget(QWidget, FORM_CLASS):
         # add button to delete, its edit session so should be visible
         right = self.tabWidget.tabBar().RightSide
         cbutton = QToolButton(self.tabWidget)
-        cbutton.setObjectName('giapCloseTab')
+        cbutton.setObjectName('ribCloseTab')
         cbutton.setText('x')
         cbutton.setMinimumSize(QSize(16, 16))
         cbutton.setMaximumSize(QSize(16, 16))
@@ -114,7 +112,7 @@ class Widget(QWidget, FORM_CLASS):
         # sep = QFrame()
         # sep.setFrameShape(QFrame.VLine)
         # sep.setFrameShadow(QFrame.Raised)
-        # sep.setObjectName('giapLine')
+        # sep.setObjectName('ribLine')
         # sep.setMinimumSize(QSize(6, 100))
         # cwidget.lay.addWidget(sep)
         section.setVisible(True)
@@ -129,7 +127,7 @@ class Widget(QWidget, FORM_CLASS):
 
         self.conf = Config()
         if ask and self.conf.setts['ribbons_config'] != self.generate_ribbon_config():
-            self.save = CustomMessageBox(None, tr("Do you want to save your changes?")).button_yes_no()
+            self.save = CustomMessageBox(None, tr(f"""<html><head/><body><b>Do you want to save your changes<br></body></html>""")).button_yes_no()
             if self.save == QMessageBox.Yes:
                 self.editChanged.emit(False)
             else:
@@ -187,7 +185,7 @@ class Widget(QWidget, FORM_CLASS):
             self.instr.setTextFormat(Qt.AutoText)
             self.instr.setScaledContents(True)
             self.frm = QFrame()
-            self.frm.setObjectName('giapSectionAdd')
+            self.frm.setObjectName('ribSectionAdd')
             self.frmlay = QHBoxLayout(self.frm)
             self.secadd = CustomSectionAdd()
 
@@ -210,20 +208,6 @@ class Widget(QWidget, FORM_CLASS):
             self.tabWidget.widget(tabind).setUpdatesEnabled(False)
             self._section_control_remove(tabind)
             self.tabWidget.widget(tabind).lay.addStretch()
-            if not isinstance(lay.itemAt(cnt-1), QPushButton):
-                gbut = QPushButton()
-                gbut.clicked.connect(lambda x: webbrowser.open('www.giap.pl'))
-                gbut.setIcon(
-                    QIcon(os.path.join(plug_dir, 'icons', 'giap.png'))
-                )
-                gbut.setCursor(QCursor(Qt.PointingHandCursor))
-                gbut.setToolTip(tr("GIAP.pl - Website"))
-                gbut.setStyleSheet(
-                    'QPushButton{border-width: 0px; width: 220px; height:72px;'
-                    'background-color: transparent;}'
-                )
-                gbut.setIconSize(QSize(220-4, 72-4))
-                self.tabWidget.widget(tabind).lay.addWidget(gbut)
             self.tabWidget.widget(tabind).setUpdatesEnabled(True)
 
     def add_user_selected_section(self):
@@ -249,13 +233,6 @@ class Widget(QWidget, FORM_CLASS):
                 child = self.parent.findChild(QAction, btn[0])
                 if child is None:
                     sec.add_action(*btn)
-                else:
-                    sec.add_action(child, *btn[1:])
-                    if btn[0] in ['giapMyPrints', 'giapQuickPrint']:
-                        print_trig = True
-
-            if sel == 'Prints' or print_trig:
-                self.printsAdded.emit()
 
         self.tabWidget.setUpdatesEnabled(True)
 
@@ -323,7 +300,7 @@ class Widget(QWidget, FORM_CLASS):
                 continue
             it = lay.itemAt(ind)
             if it.widget() is not None:
-                if it.widget().objectName() == 'giapSectionAdd':
+                if it.widget().objectName() == 'ribSectionAdd':
                     it.widget().hide()
                     lay.removeItem(it)
         QApplication.processEvents()
@@ -335,12 +312,12 @@ class Widget(QWidget, FORM_CLASS):
         self.tabWidget.setUpdatesEnabled(False)
         if self.edit_session:
             tab = QWidget()
-            tab.setObjectName('giapAddNewTabControl')
+            tab.setObjectName('ribAddNewTabControl')
             self.tabWidget.addTab(tab, '+')
         else:
             last_tab = self.tabWidget.tabBar().count() - 1
             if self.tabWidget.widget(last_tab).objectName() == \
-                    'giapAddNewTabControl':
+                    'ribAddNewTabControl':
                 self.tabWidget.removeTab(last_tab)
         self.tabWidget.setUpdatesEnabled(True)
 
@@ -434,7 +411,7 @@ class CustomTab(QWidget):
         self.lay.setSpacing(0)
         self.lay.setMargin(6)
         self.setLayout(self.lay)
-        self.setObjectName('giapTab')
+        self.setObjectName('ribTab')
 
         self.lay.addStretch()
         self.lay.setDirection(QBoxLayout.LeftToRight)
@@ -515,7 +492,7 @@ class CustomSection(QWidget):
             parent.parent().editChanged.connect(self.edit_toggle)
             parent.parent().deletePressSignal.connect(self.key_pressed)
 
-        self.setObjectName('giapSection')
+        self.setObjectName('ribSection')
 
         # target of drop
         self.target = None
@@ -529,7 +506,7 @@ class CustomSection(QWidget):
         self.horizontalLayout_2.setSpacing(0)
 
         self.clabel = CustomLabel(tr(name), self)
-        self.clabel.setObjectName("giapSectionLabel")
+        self.clabel.setObjectName("ribSectionLabel")
         self.clabel.setMaximumSize(QSize(100000, 20))
         self.clabel.setMinimumSize(QSize(50, 20))
         self.clabel.setAlignment(Qt.AlignCenter)
@@ -537,7 +514,7 @@ class CustomSection(QWidget):
         self.clabel.setMinimumSize(QSize(charakter * 8, 20))
 
         self.pushButton_close_sec = QToolButton(self)
-        self.pushButton_close_sec.setObjectName("giapSectionClose")
+        self.pushButton_close_sec.setObjectName("ribSectionClose")
         self.pushButton_close_sec.setText('x')
         self.pushButton_close_sec.setStyleSheet(
             'border-radius: 3px; font: 7pt;'
@@ -550,7 +527,7 @@ class CustomSection(QWidget):
         self.sep = QFrame()
         self.sep.setFrameShape(QFrame.VLine)
         self.sep.setFrameShadow(QFrame.Raised)
-        self.sep.setObjectName('giapLine')
+        self.sep.setObjectName('ribLine')
         self.sep.setMinimumSize(QSize(6, 100))
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -588,7 +565,7 @@ class CustomSection(QWidget):
                 itw = it.widget()
                 ind = self.gridLayout.indexOf(itw)
                 wid = self.gridLayout.itemAt(ind).widget()
-                if wid.objectName()[:4].lower() == 'giap' or not wid.actions():
+                if wid.objectName()[:4].lower() == 'rib' or not wid.actions():
                     act = wid.objectName()
                 else:
                     act = wid.actions()[0].objectName()
@@ -660,7 +637,7 @@ class CustomSection(QWidget):
             name_tool = name_tool.replace(':', '_')
             self.tbut.setObjectName(name_tool)
             self.tbut.org_state = action.isEnabled()
-            self.set_new_giap_icons(self.tbut, name_tool, action)
+            self.set_new_rib_icons(self.tbut, name_tool, action)
             self.tbut.setObjectName('gp_' + action.objectName())
             self.tbut.setDefaultAction(action)
         elif QgsApplication.processingRegistry().algorithmById(action):
@@ -700,7 +677,7 @@ class CustomSection(QWidget):
 
         return self.tbut
 
-    def set_new_giap_icons(self, button, name_tool, action):
+    def set_new_rib_icons(self, button, name_tool, action):
         dirnm = os.path.dirname(__file__)
         list_tool = [
             'mProcessingUserMenu_native_buffer','mProcessingUserMenu_native_centroids',
@@ -860,7 +837,7 @@ class CustomSection(QWidget):
         oname = self.tbut.objectName()
         dirnm = os.path.dirname(__file__)
 
-        if oname == 'giapWMS':
+        if oname == 'ribWMS':
             self.orto_add = OrtoAddingTool(self, self.tbut)
             connect_orto = self.orto_add.connect_ortofotomapa_group
             self.tbut.setIcon(
@@ -869,23 +846,13 @@ class CustomSection(QWidget):
             for service in self.orto_add.services:
                 service.orto_group_added.connect(connect_orto)
 
-        if oname == 'giapCompositions':
+        if oname == 'ribCompositions':
             # this on will be find by compositions after loading
             # documentation purposes
             self.tbut.setIcon(
-                QIcon(os.path.join(dirnm, 'icons', 'compositions_giap.png'))
+                QIcon(os.path.join(dirnm, 'icons', 'compositions_rib.png'))
             )
             self.tbut.setToolTip(tr("Composition settings"))
-
-        if oname == "giapQuickPrint":
-            self.quick_print = PrintMapTool(iface, self)
-            self.tbut.clicked.connect(self.quick_print.run)
-            self.tbut.setToolTip(tr("Map quick print"))
-            self.tbut.setIcon(QIcon(f'{dirnm}/icons/quick_print.png'))
-
-        if oname == "giapMyPrints":
-            self.tbut.setToolTip(tr("My Prints"))
-            self.tbut.setIcon(QIcon(f'{dirnm}/icons/my_prints.png'))
 
     def unload_custom_actions(self):
         if self.orto_add:
@@ -1147,7 +1114,7 @@ class CustomSectionAdd(QToolButton):
     def __init__(self, parent=None):
         super(CustomSectionAdd, self).__init__(parent)
         self.setAttribute(Qt.WA_DeleteOnClose)
-        self.setObjectName('giapSectionAddButton')
+        self.setObjectName('ribSectionAddButton')
         self.setMinimumSize(QSize(30, 30))
         self.setMaximumSize(QSize(30, 30))
         self.setText('+')
