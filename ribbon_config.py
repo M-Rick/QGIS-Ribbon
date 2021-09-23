@@ -90,28 +90,6 @@ RIBBON_DEFAULT = [
                     ],
                 },
 
-            {
-                'label': tr('Prints'),
-                'id': 'Prints',
-                'btn_size': 30,
-                'btns': [
-                    ['mActionNewPrintLayout', 0, 0],
-                    ['giapMyPrints', 0, 1],
-                    ['mActionShowLayoutManager', 1, 0],
-                    ['giapQuickPrint', 1, 1],
-                ]
-            },
-            {
-                'label': tr('GIAP Tools'),
-                'id': 'GIAP Tools',
-                'btn_size': 60,
-                'btns': [
-                    ['giapCompositions', 0, 0],
-                    ['giapWMS', 0, 1],
-                    ['giapQuickPrint', 0, 2],
-                ]
-            },
-
         ]
     },
 

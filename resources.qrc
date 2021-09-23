@@ -1,5 +1,5 @@
 <RCC>
-  <qresource prefix="/plugins/GIAP-giap_layout">
+  <qresource prefix="/plugins/QGIS-Ribbon">
     <file>icons/adamap128.png</file>
     <file>icons/panmap.png</file>
     <file>icons/magnet_tool.png</file>
