@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 """
+
+/***************************************************************************
+QGIS Ribbon based on GIAP-PolaMap(Lite)
+Highly customized by Aymeric GILLAIZEAU (2021)
+                        a.gillaizeau@moov.info
+                        
+***************************************************************************/
+
 /***************************************************************************
  MainTabQgsWidget
                                  A QGIS plugin
@@ -33,5 +41,6 @@ def classFactory(iface):  # pylint: disable=invalid-name
     :type iface: QgsInterface
     """
     #
-    from .giap_layout import MainTabQgsWidget
+    ##from .giap_layout import MainTabQgsWidget
+    from .layout import MainTabQgsWidget
     return MainTabQgsWidget(iface)
