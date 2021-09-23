@@ -14,40 +14,7 @@ def normalize_path(path):
 
 
 class CustomMessageBox(QMessageBox):
-    stylesheet = """
-        * {
-            background-color: rgb(53, 85, 109, 220);
-            color: rgb(255, 255, 255);
-            font: 10pt "Segoe UI";
-            border: 0px;
-        }
-
-        QAbstractItemView {
-            selection-background-color:  rgb(87, 131, 167);
-        }
-
-        QPushButton {
-            border: none;
-            border-width: 2px;
-            border-radius: 6px;
-            background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(65, 97, 124, 255), stop:1 rgba(90, 135, 172, 255));
-            padding: 5px 15px;
-        }
-
-        QPushButton:checked {
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(65, 97, 124, 255), stop:1 rgba(31, 65, 90, 255));
-            border: solid;
-            border-width: 2px;
-            border-color: rgb(65, 97, 124);
-        }
-
-        QPushButton:pressed {
-            background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(65, 97, 124, 255), stop:1 rgba(31, 65, 90, 255));
-            border: solid;
-            border-width: 2px;
-            border-color: rgb(65, 97, 124);
-        }
-    """
+    
 
     def __init__(self, parent=None, text='', image=''):
         super(CustomMessageBox, self).__init__(parent)
@@ -56,16 +23,14 @@ class CustomMessageBox(QMessageBox):
         self.rebuild_layout(text, image)
 
     def rebuild_layout(self, text, image):
-        self.setStyleSheet(self.stylesheet)
 
         scrll = QScrollArea(self)
-        scrll.setWidgetResizable(True)
+        scrll.setWidgetResizable(False)
         self.qwdt = QWidget()
         self.qwdt.setLayout(QGridLayout(self))
         grd = self.findChild(QGridLayout)
         if text:
             lbl = QLabel(text, self)
-            lbl.setStyleSheet(self.stylesheet)
             lbl.setAlignment(Qt.AlignCenter)
             lbl.setWordWrap(False)
             lbl.setTextInteractionFlags(
@@ -83,12 +48,10 @@ class CustomMessageBox(QMessageBox):
 
         scrll.setWidget(self.qwdt)
         scrll.setContentsMargins(15, 5, 15, 10)
-        scrll.setStyleSheet(self.stylesheet)
         grd.addWidget(scrll, 0, 1)
         self.layout().removeItem(self.layout().itemAt(0))
         self.layout().removeItem(self.layout().itemAt(0))
-        self.setWindowTitle('GIAP-PolaMap(lite)')
-        self.setWindowIcon(QIcon(':/plugins/giap_layout/icons/giap_logo.png'))
+        self.setWindowTitle('QGIS Ribbon')
 
     def button_ok(self):
         self.setStandardButtons(QMessageBox.Ok)
