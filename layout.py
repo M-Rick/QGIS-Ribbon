@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os.path
 import platform
+import locale
 import subprocess
 import webbrowser
 from qgis.utils import iface
@@ -342,74 +343,6 @@ class MainTabQgsWidget:
         del animation
         if mode == 'out': widget.hide()
 
-    def show_style_manager_dialog(self):
-        """Show dialog to manage qgis styles"""
-        self.style_manager_dlg = StyleManagerDialog(self.style_manager)
-        self.style_manager_dlg.setWindowFlags(
-            Qt.Window | Qt.WindowCloseButtonHint
-        )
-        self.style_manager_dlg.exec_()
-
-    def show_settings_dialog(self):
-        self.set_dlg = SettingsDialog()
-        self.set_dlg.pushButton_restore.clicked.connect(self.restore_default_ribbon_settings)
-        self.set_dlg.radioButton_pl.clicked.connect(self.set_polish)
-        self.set_dlg.radioButton_en.clicked.connect(self.set_english)
-        self.set_dlg.radioButton_sys.clicked.connect(self.restore_overrideFlag)
-        if str(QSettings().value('locale/overrideFlag')) == "false":
-            self.set_dlg.radioButton_sys.setChecked(True)
-        elif str(QSettings().value('locale/userLocale')) == "en":
-            self.set_dlg.radioButton_en.setChecked(True)
-        elif str(QSettings().value('locale/userLocale')) == "pl_PL":
-            self.set_dlg.radioButton_pl.setChecked(True)
-        self.set_dlg.exec_()
-
-    def set_polish(self):
-        self.check_lang_win_flag()
-        str(QSettings().setValue('locale/userLocale', 'pl_PL'))
-        self.iface.messageBar().pushMessage(
-            'QGIS Ribbon',
-            tr('Please, restart QGIS!'),
-            Qgis.Info,
-            0
-        )
-        self.restart_qgis()
-
-    def set_english(self):
-        self.check_lang_win_flag()
-        str(QSettings().setValue('locale/userLocale', 'en'))
-        self.iface.messageBar().pushMessage(
-            'QGIS Ribbon',
-            tr('Please, restart QGIS!'),
-            Qgis.Info,
-            0
-        )
-        self.restart_qgis()
-
-    def restore_overrideFlag(self):
-        str(QSettings().setValue('locale/overrideFlag', "false"))
-        self.iface.messageBar().pushMessage(
-            'QGIS Ribbon',
-            tr('Please, restart QGIS!'),
-            Qgis.Info,
-            0
-        )
-        self.restart_qgis()
-
-    def restore_default_ribbon_settings(self):
-        self.set_dlg.pushButton_restore.clicked.disconnect()
-        edit_ses_on_start = self.main_widget.edit_session
-        if edit_ses_on_start: self.main_widget.edit_session_toggle()
-        for tabind in range(len(self.main_widget.tabs)):
-            self.main_widget.remove_tab(0)
-        self.save_user_ribbon_config(False)
-        self.load_ribbons()
-        if edit_ses_on_start: self.main_widget.edit_session_toggle()
-        self.set_dlg.pushButton_restore.clicked.connect(self.restore_default_ribbon_settings)
-
-    def check_lang_win_flag(self):
-        QgsSettings().setValue('locale/overrideFlag', 'true')
-
     def restart_qgis(self):
         if project.write():
             res = CustomMessageBox(None, "The program must be restarted for the changes to take effect. Restart now?\n"
@@ -420,7 +353,8 @@ class MainTabQgsWidget:
                 self.iface.actionExit().trigger()
 
     def install_translator(self):
-        locale = 'en'
+        global locale
+        locale = locale.setlocale(locale.LC_ALL, '')[0:2]
         try:
             # not always locale can be converted to str, apparently
             loc = str(QSettings().value('locale/userLocale'))
@@ -429,7 +363,10 @@ class MainTabQgsWidget:
         except Exception:
             # do not install translator -> english
             return
-        if 'pl' in locale:
+        if 'fr' in locale:
+            trans_path = os.path.join(self.plugin_dir, 'i18n',
+                                      f'rib_fr.qm')
+        elif 'pl' in locale:
             trans_path = os.path.join(self.plugin_dir, 'i18n',
                                       f'rib_pl.qm')
         else:
