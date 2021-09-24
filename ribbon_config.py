@@ -74,6 +74,7 @@ RIBBON_DEFAULT = [
                         ['mActionAddVirtualLayer', 1, 3],
                         ['mActionAddAmsLayer', 1, 4],
                         ['mActionAddAfsLayer', 1, 5],
+                        ['mActionDataSourceManager', 1, 7],
                     ],
                 },
 
@@ -89,6 +90,25 @@ RIBBON_DEFAULT = [
                         ['mActionNewVirtualLayer', 0, 3]
                     ],
                 },
+                {
+                    'label': tr('Prints'),
+                    'id': 'Prints',
+                    'btn_size': 30,
+                    'btns': [
+                        ['mActionNewPrintLayout', 0, 0],
+                        ['mActionShowLayoutManager', 1, 0],
+                        ['mActionNewReport', 0, 1],
+                        ['mActionSaveMapAsPdf', 1, 1],
+                ],
+            },
+            {
+                    'label': tr('Database'),
+                    'id': 'Database',
+                    'btn_size': 60,
+                    'btns': [
+                        ['mActionDataSourceManager', 0, 0],
+                ]
+            },
 
         ]
     },
