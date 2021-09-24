@@ -78,26 +78,6 @@
         <source>Prints</source>
         <translation>Wydruki</translation>
     </message>
-     <message>
-        <location filename="../ribbon_config.py" line="104"/>
-        <source>GIAP Tools</source>
-        <translation>Narzędzia GIAP</translation>
-    </message>
-    <message>
-        <location filename="../tools.py" line="101"/>
-        <source>Default style set</source>
-        <translation>Ustawiono styl domyślny</translation>
-    </message>
-    <message>
-        <location filename="../tools.py" line="103"/>
-        <source>Path to *.qss not found, load default style.</source>
-        <translation>Nie odnaleziono ścieżki do *.qss, ustawiono styl domyślny.</translation>
-    </message>
-    <message>
-        <location filename="../tools.py" line="107"/>
-        <source>Style activated!</source>
-        <translation>Styl aktywowano!</translation>
-    </message>
     <message>
         <location filename="../utils.py" line="130"/>
         <source>Project</source>
@@ -152,11 +132,6 @@
         <location filename="../utils.py" line="303"/>
         <source>Prints</source>
         <translation>Wydruki</translation>
-    </message>
-    <message>
-        <location filename="../utils.py" line="315"/>
-        <source>GIAP Tools</source>
-        <translation>Narzędzia GIAP</translation>
     </message>
     <message>
         <location filename="../utils.py" line="326"/>
@@ -248,16 +223,10 @@
         <source>Advanced digitizing tools</source>
         <translation>Zaawansowane narzędzia digitalizacji</translation>
     </message>
-
     <message>
         <location filename="../layout.py" line="78"/>
         <source>Switch on manually missing core plugin: Topology Checker</source>
         <translation>Włącz brakującą wtyczkę wbudowaną: Kontrola Topologii</translation>
-    </message>
-    <message>
-        <location filename="../layout.py" line="145"/>
-        <source>GIAP.pl - Website</source>
-        <translation>GIAP.pl - Strona WWW</translation>
     </message>
     <message>
         <location filename="../layout.py" line="178"/>
@@ -279,13 +248,11 @@
         <source>Enter the data according to the scheme:</source>
         <translation>Wpisz dane według schematu:</translation>
     </message>
-
     <message>
         <location filename="../layout.py" line="135"/>
         <source>for the address point:</source>
         <translation>dla punktu adresowego:</translation>
     </message>
-
     <message>
         <location filename="../layout.py" line="136"/>
         <source>for the street:</source>
@@ -372,86 +339,9 @@
         <translation>Ustawienia kompozycji</translation>
     </message>
     <message>
-        <location filename="../dynamic_layout.py" line="220"/>
-        <source>GIAP.pl - Website</source>
-        <translation>GIAP.pl - Strona WWW</translation>
-    </message>
-    <message>
         <location filename="../ribbon_config.py" line="122"/>
         <source>Advanced attributes</source>
         <translation>Zaawansowane atrybuty</translation>
-    </message>
-</context>
-<context>
-    <name>Form</name>
-    <message>
-        <location filename="../dynamic_layout.ui" line="269"/>
-        <source>GIAP Tools</source>
-        <translation>Narzędzia GIAP</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="26"/>
-        <source>GIAP-PolaMap(lite) - Form</source>
-        <translation>GIAP-PolaMap(lite) - Form</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="106"/>
-        <source>Layers</source>
-        <translation>Warstwy</translation>
-    </message>
-    <message>
-        <location filename="../kompozycje_widget.ui" line="192"/>
-        <source>Compositions:</source>
-        <translation>Kompozycje:</translation>
-    </message>
-    <message>
-        <location filename="../kompozycje_widget.ui" line="14"/>
-        <source>GIAP-PolaMap(lite) - Form_composition</source>
-        <translation>GIAP-PolaMap(lite) - formularz kompozycji</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="139"/>
-        <source>Voivodeship</source>
-        <translation>Województwo</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="154"/>
-        <source>District</source>
-        <translation>Powiat</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="169"/>
-        <source>Municipality</source>
-        <translation>Gmina</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="184"/>
-        <source>Cadastral district</source>
-        <translation>Obręb ewidencyjny</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="218"/>
-        <source>parcel number or TERYT</source>
-        <translation>nr działki lub TERYT</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="204"/>
-        <source>Enter the data according to the scheme:
-TERYT: 146513_8.1016.17/2
-or fill in the previous fields and indicate the parcel number e.g. 17/2</source>
-        <translation>Wpisz dane według schematu:
-TERYT: 146513_8.1016.17/2
-lub uzupełnij wcześniejsze pola i wskaż numer działki np. 17/2</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="246"/>
-        <source>Search address point</source>
-        <translation>Wyszukaj punkt adresowy</translation>
-    </message>
-    <message>
-        <location filename="../dynamic_layout.ui" line="297"/>
-        <source>Turn off or turn on search tool</source>
-        <translation>Wyłącz lub włącz wyszukiwarkę</translation>
     </message>
 </context>
 </TS>
