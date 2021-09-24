@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os.path
+import platform
 import subprocess
 import webbrowser
 from qgis.utils import iface
@@ -15,24 +16,14 @@ from qgis.PyQt.QtWidgets import QAction, QToolBar, QToolButton, QWidget, \
 
 # Initialize Qt resources from file resources.py
 from qgis._core import QgsProject, Qgis, QgsSettings, QgsApplication
-
-from .Settings.settings_layout import SettingsDialog
-from .OrtoTools import OrtoAddingTool
-from .QuickPrint import PrintMapTool
-
-from .Kompozycje.Kompozycje import CompositionsTool
-from .kompozycje_widget import kompozycjeWidget
 # from .resources import *
 # Import the code for the dialog
-# from .giap_layout_dialog import MainTabQgsWidgetDialog
+# from .rib_layout_dialog import MainTabQgsWidgetDialog
 from .config import Config
 from .tools import StyleManager
 from .utils import tr
 
-from .StyleManager.stylemanager import StyleManagerDialog
-from .Searcher.searchTool import SearcherTool
-
-from .giap_dynamic_layout import Widget
+from .dynamic_layout import Widget
 from .ribbon_config import RIBBON_DEFAULT
 from .CustomMessageBox import CustomMessageBox
 project = QgsProject.instance()
@@ -56,20 +47,16 @@ class MainTabQgsWidget:
         self.install_translator()
         # initialize locale
         self.main_widget = Widget(self.iface.mainWindow())
-        self.kompozycje_widget = kompozycjeWidget()
 
         # list with hidden left docs, to reinstitute on user click
         self.left_docks = []
         # setup config structure for maintainning, toolbar and user interface
         # customization
         self.config = Config()
-        self.searcher = SearcherTool(self.main_widget, self.iface)
+        #self.searcher = SearcherTool(self.main_widget, self.iface)
 
         # initialize StyleManager for styling handling
         self.style_manager = StyleManager(self)
-        self.print_map_tool = PrintMapTool(self.iface)
-        self.iface.projectRead.connect(self.projekt_wczytany)
-        self.iface.newProjectCreated.connect(self.projekt_wczytany)
         self.iface.initializationCompleted.connect(self.load_ribbons)
         self.iface.newProjectCreated.connect(self.missingCorePlugins)
 
@@ -89,23 +76,20 @@ class MainTabQgsWidget:
         }
         """)
         self.save_default_user_layout()
-        self.style_manager.run_last_style()
 
-        self.kompozycje = CompositionsTool(self.iface, self)
-
-        self.toolbar = QToolBar('GiapToolBar', self.iface.mainWindow())
-        self.toolbar.setObjectName('GiapToolBar')
+        self.toolbar = QToolBar('RibToolBar', self.iface.mainWindow())
+        self.toolbar.setObjectName('RibToolBar')
         self.iface.mainWindow().addToolBar(self.toolbar)
         self.toolbar.setMovable(False)
         self.toolbar.setFloatable(False)
         self.toolbar.addWidget(self.main_widget)
-        self.ustaw_legende()
 
         self.menuButton = QToolButton()
-        self.menuButton.setText(tr("Show menu"))
-        self.menuButton.setCheckable(True)
-        self.menuButton.setBaseSize(QSize(80, 25))
-        self.menuButton.toggled.connect(self.menu_show)
+        if platform.system() != 'Darwin':
+            self.menuButton.setText(tr("Show menu"))
+            self.menuButton.setCheckable(True)
+            self.menuButton.setBaseSize(QSize(80, 25))
+            self.menuButton.toggled.connect(self.menu_show)
 
         self.editButton = QToolButton()
         self.editButton.setText(tr("Edit menu"))
@@ -114,51 +98,11 @@ class MainTabQgsWidget:
         self.editButton.toggled.connect(self.set_edit_session)
         self.menu_show()
 
-        self.styleButton = QToolButton()
-        self.styleButton.setText(tr("Change Theme"))
-        self.styleButton.setBaseSize(QSize(25, 25))
-        self.styleButton.clicked.connect(self.show_style_manager_dialog)
-        self.styleButton.setObjectName('ThemeButton')
-        self.settingsButton = QToolButton()
-        self.settingsButton.setText(tr("Settings"))
-        self.settingsButton.setBaseSize(QSize(25, 25))
-        self.settingsButton.clicked.connect(self.show_settings_dialog)
-        self.settingsButton.setObjectName('SettingsButton')
         corner_widget = QWidget(self.main_widget.tabWidget)
         corner_layout = QHBoxLayout()
         corner_layout.setContentsMargins(0, 0, 0, 0)
         corner_layout.addWidget(self.menuButton)
         corner_layout.addWidget(self.editButton)
-        corner_layout.addWidget(self.styleButton)
-        corner_layout.addWidget(self.settingsButton)
-        self.main_widget.lineEdit_address.setToolTip(f"""{tr('Enter the data according to the scheme:')}
-{tr('for the address point:')} {'Warszawa, Pasaż Ursynowski 1'}
-{tr('for the street:')} {'Warszawa, Pasaż Ursynowski'}""")
-        #logo icon
-        plug_dir = os.path.dirname(__file__)
-        gbut = QPushButton()
-        gbut.clicked.connect(lambda: webbrowser.open('www.giap.pl'))
-        gbut.setIcon(
-            QIcon(os.path.join(plug_dir, 'icons', 'giap.png'))
-        )
-        gbut.setCursor(QCursor(Qt.PointingHandCursor))
-        gbut.setToolTip(tr("GIAP.pl - Website"))
-        gbut.setStyleSheet(
-            'QPushButton{border-width: 0; width: 153px; height:50px;'
-            'background-color: transparent;}'
-        )
-        gbut.setIconSize(QSize(153, 50))
-
-        #toolbar with only logo
-        self.logo_toolbar = QToolBar('GiapLogoBar', self.iface.mainWindow())
-        self.logo_toolbar.setObjectName('GiapLogoBar')
-        self.iface.mainWindow().addToolBar(self.logo_toolbar)
-        self.logo_toolbar.setMovable(False)
-        self.logo_toolbar.setFloatable(True)
-        self.logo_toolbar.addWidget(gbut)
-        self.logo_toolbar.visibilityChanged.connect(self.lock_logo_Toolbar)
-        self.toolbar.visibilityChanged.connect(self.visible_logo_giap_toolbar)
-        self.logo_toolbar.setLayoutDirection(Qt.RightToLeft)
 
         corner_widget.setLayout(corner_layout)
         self.main_widget.tabWidget.setCornerWidget(corner_widget)
@@ -166,32 +110,9 @@ class MainTabQgsWidget:
 
         # signals
         self.main_widget.editChanged.connect(self.save_user_ribbon_config)
-        self.main_widget.editChanged.connect(self.kompozycje.update_buttons)
-        self.main_widget.printsAdded.connect(self.custom_prints)
-        self.main_widget.editChanged.connect(self.custom_prints)
         self.project_path = os.path.dirname(
             os.path.abspath(project.fileName()))
         self.toolbar.show()
-
-        #tools under GIAP logo
-        self.main_widget.runQuickPrintButton.clicked.connect(self.print_map_tool.run)
-        self.main_widget.runQuickPrintButton.setToolTip(tr("Map quick print"))
-        self.main_widget.runQuickPrintButton.setIcon(QIcon(f'{self.plugin_dir}/icons/quick_print.png'))
-
-        self.main_widget.runCompositionButton.clicked.connect(self.kompozycje.config)
-        self.main_widget.runCompositionButton.setIcon(QIcon(f'{self.plugin_dir}/icons/compositions_giap.png'))
-        self.main_widget.runCompositionButton.setToolTip(tr("Composition settings"))
-
-        orto_button = self.main_widget.runOrtoTool
-        orto_button.setIcon(QIcon(f'{self.plugin_dir}/icons/orto_icon2.png'))
-        self.orto = OrtoAddingTool(self.main_widget, orto_button)
-
-        self.visibility_search_tool = False
-        self.main_widget.offOnSearchButton.clicked.connect(lambda: self.off_on_search_tool(self.visibility_search_tool))
-        self.main_widget.offOnSearchButton.setIcon(QIcon(f'{self.plugin_dir}/styles/GIAP Navy Blue/icons/close.png'))
-
-        #self.searcher.run()
-        # set strong focus to get keypressevent
         self.main_widget.setFocusPolicy(Qt.StrongFocus)
 
         process = qgis.utils.plugins.get('processing')
@@ -199,24 +120,6 @@ class MainTabQgsWidget:
             process.initGui()
             process.initProcessing()
             self.load_ribbons()
-
-    def ustaw_legende(self):
-
-        self.layer_panel = self.iface.mainWindow().findChildren(QDockWidget, 'Layers')[0]
-
-        self.layer_view = self.iface.layerTreeView()
-        self.layer_view.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        layer_toolbar = self.layer_view.parent().children()[1]
-        widget_w_warstwach = QWidget()
-        layout_widgetu = QVBoxLayout()
-        layout_widgetu.addWidget(layer_toolbar)
-        layout_widgetu.addWidget(self.kompozycje_widget)
-        layout_widgetu.addWidget(self.layer_view)
-        layout_widgetu.setContentsMargins(0, 7, 0, 4)
-        widget_w_warstwach.setLayout(layout_widgetu)
-        self.layer_panel.setWidget(widget_w_warstwach)
-        self.layer_panel.setTitleBarWidget(QWidget())
-        self.main_widget.pokaz_warstwy.toggled.connect(self.warstwy_show)
 
     def load_ribbons(self):
         # turn on ribbon editing
@@ -247,7 +150,7 @@ class MainTabQgsWidget:
         # turn off ribbon editing
         self.main_widget.edit_session_toggle()
 
-    def visible_logo_giap_toolbar(self, visible):
+    def visible_logo_rib_toolbar(self, visible):
         self.logo_toolbar.setVisible(not visible)
 
     def lock_logo_Toolbar(self):
@@ -265,7 +168,7 @@ class MainTabQgsWidget:
     def custom_prints(self):
         """Load custom tools to qgis"""
 
-        b_mprints = self.main_widget.findChildren(QToolButton, 'giapMyPrints')
+        b_mprints = self.main_widget.findChildren(QToolButton, 'ribMyPrints')
         for b_mprint in b_mprints:
             b_mprint.setIcon(QIcon(f'{self.plugin_dir}/icons/my_prints.png'))
         self.my_prints_setup()
@@ -295,7 +198,7 @@ class MainTabQgsWidget:
         # unique and not empty objects name from toolbars
         tbars_names = [
             x.objectName() for x in active_toolbars
-            if x.objectName() not in ['', None, 'NULL', 'GiapToolBar']
+            if x.objectName() not in ['', None, 'NULL', 'RibToolBar']
         ]
 
         self.config.save_original_toolbars(tbars_names)
@@ -326,7 +229,7 @@ class MainTabQgsWidget:
 
     def my_prints_setup(self):
         btns = self.iface.mainWindow().findChildren(
-            QToolButton, 'giapMyPrints')
+            QToolButton, 'ribMyPrints')
         for btn in btns:
             btn.setToolTip(tr("My Prints"))
             btn.setPopupMode(QToolButton.InstantPopup)
@@ -340,7 +243,7 @@ class MainTabQgsWidget:
 
     def action_my_prints_menu(self):
         btns = self.iface.mainWindow().findChildren(
-            QToolButton, 'giapMyPrints')
+            QToolButton, 'ribMyPrints')
         for btn in btns:
             main_widget = self.main_widget
             menu = QMenu(main_widget)
@@ -367,15 +270,13 @@ class MainTabQgsWidget:
         self.style_manager.activate_style('')
         self.save_user_ribbon_config(False)
         # self.main_widget.unload_custom_actions()
-        self.kompozycje.unload()
         self.toolbar.hide()
 
         # reinstitute original qgis layout
-        self.kompozycje_widget.hide()
         self.load_default_user_layout()
 
         self.iface.messageBar().pushMessage(
-            'GIAP-PolaMap(lite)',
+            'QGIS Ribbon',
             tr('Please, restart QGIS!'),
             Qgis.Info,
             0
@@ -437,14 +338,6 @@ class MainTabQgsWidget:
         for layer in list(project.mapLayers().values()):
             layer.setName(layer.name().replace(':', '_'))
 
-    def projekt_wczytany(self):
-        """ setup after loading new project
-        """
-
-        self.repair_layers_names_for_compositions()
-        self.kompozycje.start()
-        self.kompozycje.modify_tool.check_for_changes_in_comps()
-
     def delete_animation(self, animation, widget, mode):
         del animation
         if mode == 'out': widget.hide()
@@ -475,7 +368,7 @@ class MainTabQgsWidget:
         self.check_lang_win_flag()
         str(QSettings().setValue('locale/userLocale', 'pl_PL'))
         self.iface.messageBar().pushMessage(
-            'GIAP-PolaMap(lite)',
+            'QGIS Ribbon',
             tr('Please, restart QGIS!'),
             Qgis.Info,
             0
@@ -486,7 +379,7 @@ class MainTabQgsWidget:
         self.check_lang_win_flag()
         str(QSettings().setValue('locale/userLocale', 'en'))
         self.iface.messageBar().pushMessage(
-            'GIAP-PolaMap(lite)',
+            'QGIS Ribbon',
             tr('Please, restart QGIS!'),
             Qgis.Info,
             0
@@ -496,7 +389,7 @@ class MainTabQgsWidget:
     def restore_overrideFlag(self):
         str(QSettings().setValue('locale/overrideFlag', "false"))
         self.iface.messageBar().pushMessage(
-            'GIAP-PolaMap(lite)',
+            'QGIS Ribbon',
             tr('Please, restart QGIS!'),
             Qgis.Info,
             0
@@ -538,7 +431,7 @@ class MainTabQgsWidget:
             return
         if 'pl' in locale:
             trans_path = os.path.join(self.plugin_dir, 'i18n',
-                                      f'giap_pl.qm')
+                                      f'rib_pl.qm')
         else:
             return
         if not os.path.exists(trans_path):
