@@ -8,7 +8,7 @@ qgisMinimumVersion=3.10
 description=A customisable ribbon for QGIS
 about=QGIS Ribbon is an open-source plugin based on the wonderful work of the polish GIAP-PolaMap(lite) team. It has been cleaned out from all the polish GIAP features just keeping the ribbon. The defaut custom styles have been removed in order to keep users settings. The 'Show menu' feature works only on Windows and Linux since menus cannot be hidden under macOS.
 
-version=0.1
+version=0.11
 author=GIAP / Aymeric GILLAIZEAU
 
 tracker=https://github.com/M-Rick/QGIS-Ribbon/issues
@@ -19,7 +19,9 @@ repository=https://github.com/M-Rick/QGIS-Ribbon
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog= 0.1 - First stable release for QGIS 3
+changelog=
+   * 0.11 - Hide the "Show menu" tool under macOS.
+   * 0.1 - First stable release for QGIS 3.
 
 # Tags are comma separated with spaces allowed
 tags=python, toolbar, personalization
