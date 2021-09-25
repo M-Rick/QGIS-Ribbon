@@ -13,10 +13,47 @@ RIBBON_DEFAULT = [
                     ["mActionOpenProject", 0, 0],
                     ["mActionNewProject", 0, 1],
                     ["mActionSaveProject", 1, 0],
-                    ["mActionSaveProjectAs", 1, 1]
+                    ["mActionSaveProjectAs", 1, 1],
                 ]
             },
-
+            
+            {
+                    'label': tr('Add Layer'),
+                    'id': 'Add Layer',
+                    'btn_size': 30,
+                    'btns': [
+                        ['mActionAddOgrLayer', 0, 0],
+                        ['mActionAddWmsLayer', 0, 1],
+                        ['mActionAddPgLayer', 0, 2],
+                        ['mActionAddMeshLayer', 0, 3],
+                        ['mActionAddWcsLayer', 0, 4],
+                        ['mActionAddDelimitedText', 0, 5],
+                        ['mActionAddMssqlLayer', 0, 6],
+                        ['mActionAddDb2Layer', 1, 6],
+                        ['mActionAddOracleLayer', 0, 7],
+                        ['mActionAddRasterLayer', 1, 0],
+                        ['mActionAddWfsLayer', 1, 1],
+                        ['mActionAddSpatiaLiteLayer', 1, 2],
+                        ['mActionAddVirtualLayer', 1, 3],
+                        ['mActionAddAmsLayer', 1, 4],
+                        ['mActionAddAfsLayer', 1, 5],
+                        ['mActionDataSourceManager', 1, 6],
+                    ],
+                },
+            
+            {
+                    'label': tr('Create Layer'),
+                    'id': 'Create Layer',
+                    'btn_size': 30,
+                    'btns': [
+                        ['mActionNewGeoPackageLayer', 1, 1],
+                        ['mActionNewMemoryLayer', 0, 2],
+                        ['mActionNewVectorLayer', 0, 1],
+                        ['mActionNewSpatiaLiteLayer', 1, 2],
+                        ['mActionNewVirtualLayer', 0, 3],
+                    ],
+            },
+            
             {
                 "label": tr("Navigation"),
                 "btn_size": 30,
@@ -25,14 +62,15 @@ RIBBON_DEFAULT = [
                     ["mActionZoomIn", 0, 1],
                     ["mActionZoomOut", 0, 2],
                     ["mActionZoomFullExtent", 0, 3],
-
+                    ["mActionZoomActual", 0, 4],
                     ["mActionZoomToLayer", 1, 0],
                     ["mActionZoomToSelected", 1, 1],
                     ["mActionZoomLast", 1, 2],
-                    ["mActionZoomNext", 1, 3]
+                    ["mActionZoomNext", 1, 3],
+                    ["mActionPanToSelected", 1, 4],
                 ]
             },
-
+            
             {
                 'label': tr('Attributes'),
                 'btn_size': 30,
@@ -53,44 +91,8 @@ RIBBON_DEFAULT = [
                     ['mActionMeasureAngle', 1, 0],
                 ],
             },
-
-                {
-                    'label': tr('Add Layer'),
-                    'id': 'Add Layer',
-                    'btn_size': 30,
-                    'btns': [
-                        ['mActionAddOgrLayer', 0, 0],
-                        ['mActionAddWmsLayer', 0, 1],
-                        ['mActionAddPgLayer', 0, 2],
-                        ['mActionAddMeshLayer', 0, 3],
-                        ['mActionAddWcsLayer', 0, 4],
-                        ['mActionAddDelimitedText', 0, 5],
-                        ['mActionAddMssqlLayer', 0, 6],
-                        ['mActionAddDb2Layer', 1, 6],
-                        ['mActionAddOracleLayer', 0, 7],
-                        ['mActionAddRasterLayer', 1, 0],
-                        ['mActionAddWfsLayer', 1, 1],
-                        ['mActionAddSpatiaLiteLayer', 1, 2],
-                        ['mActionAddVirtualLayer', 1, 3],
-                        ['mActionAddAmsLayer', 1, 4],
-                        ['mActionAddAfsLayer', 1, 5],
-                        ['mActionDataSourceManager', 1, 7],
-                    ],
-                },
-
-                {
-                    'label': tr('Create Layer'),
-                    'id': 'Create Layer',
-                    'btn_size': 30,
-                    'btns': [
-                        ['mActionNewGeoPackageLayer', 1, 1],
-                        ['mActionNewMemoryLayer', 0, 2],
-                        ['mActionNewVectorLayer', 0, 1],
-                        ['mActionNewSpatiaLiteLayer', 1, 2],
-                        ['mActionNewVirtualLayer', 0, 3]
-                    ],
-                },
-                {
+            
+            {
                     'label': tr('Prints'),
                     'id': 'Prints',
                     'btn_size': 30,
@@ -101,6 +103,7 @@ RIBBON_DEFAULT = [
                         ['mActionSaveMapAsPdf', 1, 1],
                 ],
             },
+            
             {
                     'label': tr('Database'),
                     'id': 'Database',
@@ -109,7 +112,7 @@ RIBBON_DEFAULT = [
                         ['mActionDataSourceManager', 0, 0],
                 ]
             },
-
+            
         ]
     },
 
@@ -117,58 +120,65 @@ RIBBON_DEFAULT = [
         "tab_name": tr("Advanced Tools"),
         "tab_id": "Advanced Tools",
         "sections": [
+            
+            {
+                'label': tr('Selection'),
+                'id': 'Selection',
+                'btn_size': 30,
+                'btns': [
+                    ['mActionSelectFeatures', 0, 0],
+                    ['mActionSelectPolygon', 0, 1],
+                    ['mActionSelectByExpression', 0, 3],
+                    ['mActionSelectByForm', 0, 4],
+                    ['mActionDeselectAll', 0, 5],
+                    ['mActionDeselectActiveLayer', 0, 6],
+                    ['mActionSelectFreehand', 1, 0],
+                    ['mActionSelectRadius', 1, 1],
+                    ['mActionSelectAll', 1, 2],
+                    ['mActionInvertSelection', 1, 3],
+                    ['mProcessingAlg_native:selectbylocation', 1, 4],
+                    ['mActionReselect', 1, 5],
+                ],
+            },
+            
             {
                 'label': tr('Advanced attributes'),
                 'btn_size': 30,
                 'btns': [
                     ['mActionIdentify', 0, 0],
-                    ['mActionSelectFeatures', 0, 1],
-                    ['mActionSelectPolygon', 0, 2],
-                    ['mActionSelectByExpression', 0, 3],
-                    ['mActionInvertSelection', 0, 4],
-                    ['mActionDeselectAll', 0, 5],
-
-                    ['mActionOpenTable', 1, 0],
-                    ['mActionStatisticalSummary', 1, 1],
-                    ['mActionOpenFieldCalc', 1, 2],
-                    ['mActionMapTips', 1, 3],
-                    ['mActionNewBookmark', 1, 4],
-                    ['mActionShowBookmarks', 1, 5],
+                    ['mActionOpenTable', 0, 1],
+                    ['mActionOpenFieldCalc', 0, 2],
+                    ['mActionStatisticalSummary', 0, 3],
+                    ['mActionMapTips', 0, 4],
+                    ['mActionTextAnnotation', 0, 5],
+                    ['mActionMapTips', 0, 6],
+                    ['mActionDraw', 1, 0],
+                    ['mActionTemporalController', 1, 1],
+                    ['mActionNewBookmark', 1, 2],
+                    ['mActionShowBookmarks', 1, 3],
+                    ['mActionNewMapCanvas', 1, 4],
+                    ['mActionNew3DMapCanvas', 1, 5],
                 ],
             },
-
-            {
-                'label': tr('Labels'),
-                'btn_size': 30,
-                'btns': [
-                    ['mActionLabeling', 0, 0],
-                    ['mActionChangeLabelProperties', 0, 1],
-                    ['mActionPinLabels', 0, 2],
-                    ['mActionShowPinnedLabels', 0, 3],
-                    ['mActionShowHideLabels', 0, 4],
-                    ['mActionMoveLabel', 1, 0],
-                    ['mActionRotateLabel', 1, 1],
-                    ['mActionDiagramProperties', 1, 2],
-                    ['mActionShowUnplacedLabels', 1, 3],
-                ]
-            },
-
+            
             {
                 'label': tr('Vector'),
                 'btn_size': 30,
                 'btns': [
                     ['mActionToggleEditing', 0, 0],
                     ['mActionSaveLayerEdits', 0, 1],
-                    ['mActionVertexTool', 0, 2],
-                    ['mActionUndo', 0, 3],
-                    ['mActionRedo', 0, 4],
-                    ['mQActionPointer', 0, 5],
-                    ['mActionAddFeature', 1, 0],
-                    ['mActionMoveFeature', 1, 1],
-                    ['mActionDeleteSelected', 1, 2],
+                    ['mActionAllEdits', 0, 2],
+                    ['mActionVertexTool', 0, 3],
+                    ['mActionAddFeature', 0, 4],
+                    ['mActionMoveFeature', 0, 5],
+                    ['mActionDeleteSelected', 0, 6],
+                    ['mActionMultiEditAttributes', 1, 0],
+                    ['mActionUndo', 1, 1],
+                    ['mActionRedo', 1, 2],
                     ['mActionCutFeatures', 1, 3],
                     ['mActionCopyFeatures', 1, 4],
                     ['mActionPasteFeatures', 1, 5],
+                    ['mQActionPointer', 1, 6],
                 ],
             },
 
@@ -185,7 +195,7 @@ RIBBON_DEFAULT = [
                     ['mActionFillRing', 0, 6],
                     ['mActionOffsetCurve', 0, 7],
                     ['mActionCircularStringCurvePoint', 0, 8],
-
+                    ['mActionScaleFeature', 1, 0],
                     ['mActionDeleteRing', 1, 0],
                     ['mActionDeletePart', 1, 1],
                     ['mActionReshapeFeatures', 1, 2],
@@ -197,24 +207,23 @@ RIBBON_DEFAULT = [
                     ['mActionTrimExtendFeature', 1, 8],
                 ]
             },
-{
-               'label': tr('Selection'),
-               'id': 'Selection',
-               'btn_size': 30,
-               'btns': [
-                   ['mActionSelectFeatures', 0, 0],
-                   ['mActionSelectFreehand', 0, 1],
-                   ['mActionSelectPolygon', 1, 0],
-                   ['mActionSelectRadius', 1, 1],
-                   ['qgis:selectbyattribute', 0, 2],
-                   ['qgis:selectbyexpression', 0, 3],
-                   ['mActionSelectAll', 1, 2],
-                   ['mActionInvertSelection', 1, 3],
-                   ['mActionDeselectAll', 0, 4],
-                   ['mActionDeselectActiveLayer', 1, 4],
-                   ['mProcessingAlg_native:selectbylocation', 1, 5],
-               ],
-           },
+            
+            {
+                'label': tr('Labels'),
+                'btn_size': 30,
+                'btns': [
+                    ['mActionLabeling', 0, 0],
+                    ['mActionChangeLabelProperties', 0, 1],
+                    ['mActionPinLabels', 0, 2],
+                    ['mActionShowPinnedLabels', 0, 3],
+                    ['mActionShowHideLabels', 0, 4],
+                    ['mActionMoveLabel', 1, 0],
+                    ['mActionRotateLabel', 1, 1],
+                    ['mActionDiagramProperties', 1, 2],
+                    ['mActionShowUnplacedLabels', 1, 3],
+                ]
+            },
+           
         ]
     },
 
