@@ -566,5 +566,5 @@ STANDARD_TOOLS = [
 
 ]
 
-DEFAULT_STYLE = "GIAP Navy Blue"
+DEFAULT_STYLE = ""
 DEFAULT_TABS = ['Main tools', 'Advanced tools', 'Vector', 'Raster']
