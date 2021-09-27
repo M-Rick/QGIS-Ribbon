@@ -105,11 +105,17 @@ RIBBON_DEFAULT = [
             },
             
             {
-                    'label': tr('Database'),
+                    'label': tr('Decorations'),
                     'id': 'Database',
-                    'btn_size': 60,
+                    'btn_size': 30,
                     'btns': [
-                        ['mActionDataSourceManager', 0, 0],
+                        ['mActionDecorationGrid', 0, 0],
+                        ['mActionDecorationImage', 0, 1],
+                        ['mActionDecorationTitle', 0, 2],
+                        ['mActionDecorationCopyright', 0, 3],
+                        ['mActionDecorationLayoutExtent', 1, 0],
+                        ['mActionDecorationScaleBar', 1, 1],
+                        ['mActionDecorationNorthArrow', 1, 2],
                 ]
             },
             
