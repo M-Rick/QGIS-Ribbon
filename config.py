@@ -81,8 +81,8 @@ class Config:
         """
         try:
             org_tbrs = self.setts['org_toolbars']
-            if 'GiapToolBar' in org_tbrs:  # insurance
-                org_tbrs.remove('GiapToolBar')
+            if 'RibToolBar' in org_tbrs:  # insurance
+                org_tbrs.remove('RibToolBar')
         except Exception:
             # something goes wrong, we don't have previous version of user
             # layout in this case, recover main toolbars
