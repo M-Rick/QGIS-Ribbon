@@ -6,6 +6,7 @@ RIBBON_DEFAULT = [
         "tab_name": tr("Main Tools"),
         "tab_id": 'Main Tools',
         "sections": [
+            
             {
                 "label": tr("Project"),
                 "btn_size": 30,
@@ -46,11 +47,12 @@ RIBBON_DEFAULT = [
                     'id': 'Create Layer',
                     'btn_size': 30,
                     'btns': [
-                        ['mActionNewGeoPackageLayer', 1, 1],
-                        ['mActionNewMemoryLayer', 0, 2],
-                        ['mActionNewVectorLayer', 0, 1],
-                        ['mActionNewSpatiaLiteLayer', 1, 2],
-                        ['mActionNewVirtualLayer', 0, 3],
+                        ['mActionNewVectorLayer', 0, 0],
+                        ['mActionNewMemoryLayer', 0, 1],
+                        ['mActionNewVirtualLayer', 0, 2],
+                        ['mActionNewGeoPackageLayer', 1, 0],
+                        ['mActionNewSpatiaLiteLayer', 1, 1],
+                        ['mActionTopologyChecker', 1, 2],
                     ],
             },
             
@@ -106,7 +108,7 @@ RIBBON_DEFAULT = [
             
             {
                     'label': tr('Decorations'),
-                    'id': 'Database',
+                    'id': 'Decorations',
                     'btn_size': 30,
                     'btns': [
                         ['mActionDecorationGrid', 0, 0],
@@ -116,6 +118,33 @@ RIBBON_DEFAULT = [
                         ['mActionDecorationLayoutExtent', 1, 0],
                         ['mActionDecorationScaleBar', 1, 1],
                         ['mActionDecorationNorthArrow', 1, 2],
+                ]
+            },
+            
+            {
+                    'label': tr('Settings'),
+                    'id': 'Database',
+                    'btn_size': 30,
+                    'btns': [
+                        ['mActionOptions', 0, 0],
+                        ['mActionStyleManager', 0, 1],
+                        ['mActionCustomProjection', 0, 2],
+                        ['mActionHelpContents', 0, 3],
+                        ['mActionCustomization', 1, 0],
+                        ['mActionConfigureShortcuts', 1, 1],
+                        ['mActionShowPythonDialog', 1, 2],
+                        ['mActionManagePlugins', 1, 3],
+                ]
+            },
+            
+            {
+                    'label': tr(' '),
+                    'id': 'About',
+                    'btn_size': 80,
+                    'btns': [
+                        [' ', 0, 0],
+                        [' ', 0, 1],
+                        ['mActionAbout', 0, 2],
                 ]
             },
             
@@ -154,16 +183,17 @@ RIBBON_DEFAULT = [
                     ['mActionIdentify', 0, 0],
                     ['mActionOpenTable', 0, 1],
                     ['mActionOpenFieldCalc', 0, 2],
-                    ['mActionStatisticalSummary', 0, 3],
-                    ['mActionMapTips', 0, 4],
-                    ['mActionTextAnnotation', 0, 5],
-                    ['mActionMapTips', 0, 6],
+                    ['mActionNewBookmark', 0, 3],
+                    ['mActionShowBookmarks', 0, 4],
+                    ['mActionMapTips', 0, 5],
+                    ['mActionSnappingOptions', 0, 6],
+                    ['mActionTextAnnotation', 0, 7],
+                    
                     ['mActionDraw', 1, 0],
                     ['mActionTemporalController', 1, 1],
-                    ['mActionNewBookmark', 1, 2],
-                    ['mActionShowBookmarks', 1, 3],
-                    ['mActionNewMapCanvas', 1, 4],
-                    ['mActionNew3DMapCanvas', 1, 5],
+                    ['mActionStatisticalSummary', 1, 2],
+                    ['mActionNewMapCanvas', 1, 3],
+                    ['mActionNew3DMapCanvas', 1, 4],
                 ],
             },
             
@@ -174,43 +204,62 @@ RIBBON_DEFAULT = [
                     ['mActionToggleEditing', 0, 0],
                     ['mActionSaveLayerEdits', 0, 1],
                     ['mActionAllEdits', 0, 2],
-                    ['mActionVertexTool', 0, 3],
-                    ['mActionAddFeature', 0, 4],
-                    ['mActionMoveFeature', 0, 5],
-                    ['mActionDeleteSelected', 0, 6],
+                    ['mActionUndo', 0, 3],
+                    ['mActionRedo', 0, 4],
                     ['mActionMultiEditAttributes', 1, 0],
-                    ['mActionUndo', 1, 1],
-                    ['mActionRedo', 1, 2],
-                    ['mActionCutFeatures', 1, 3],
-                    ['mActionCopyFeatures', 1, 4],
-                    ['mActionPasteFeatures', 1, 5],
-                    ['mQActionPointer', 1, 6],
+                    ['mActionCutFeatures', 1, 1],
+                    ['mActionCopyFeatures', 1, 2],
+                    ['mActionPasteFeatures', 1, 3],
+                    ['mActionDeleteSelected', 1, 4],
                 ],
             },
-
+            
             {
                 'label': tr('Digitizing'),
                 'btn_size': 30,
                 'btns': [
                     ['EnableSnappingAction', 0, 0],
-                    ['EnableTracingAction', 0, 1],
-                    ['mActionRotateFeature', 0, 2],
-                    ['mActionSimplifyFeature', 0, 3],
-                    ['mActionAddRing', 0, 4],
-                    ['mActionAddPart', 0, 5],
-                    ['mActionFillRing', 0, 6],
+                    ['mActionAddFeature', 0, 1],
+                    ['mActionMoveFeature', 0, 2],
+                    ['mActionMoveFeatureCopy', 0, 3],
+                    ['mActionRotateFeature', 0, 4],
+                    ['mActionSplitFeatures', 0, 5],
+                    ['mActionSplitParts', 0, 6],
                     ['mActionOffsetCurve', 0, 7],
                     ['mActionCircularStringCurvePoint', 0, 8],
-                    ['mActionScaleFeature', 1, 0],
-                    ['mActionDeleteRing', 1, 0],
-                    ['mActionDeletePart', 1, 1],
-                    ['mActionReshapeFeatures', 1, 2],
-                    ['mActionSplitParts', 1, 3],
-                    ['mActionSplitFeatures', 1, 4],
-                    ['mActionMergeFeatureAttributes', 1, 5],
-                    ['mActionMergeFeatures', 1, 6],
-                    ['mActionReverseLine', 1, 7],
-                    ['mActionTrimExtendFeature', 1, 8],
+                    ['mActionCircle2Points', 0, 9],
+                    ['mActionCircle3Points', 0, 10],
+                    ['mActionCircleCenterPoint', 0, 11],
+                    ['mActionEllipseCenter2Points', 0, 12],
+                    ['mActionEllipseCenterPoint', 0, 13],
+                    ['mActionRectangleExtent', 0, 14],
+                    ['mActionRectangleCenterPoint', 0, 15],
+                    ['mActionRegularPolygon2Points', 0, 16],
+                    ['mActionRegularPolygonCenterPoint', 0, 17],
+                    ['mActionAddRing', 0, 18],
+                    ['mActionAddPart', 0, 19],
+                    ['mActionFillRing', 0, 20],
+                    ['EnableTracingAction', 1, 0],
+                    ['mActionVertexToolActiveLayer', 1, 1],
+                    ['mActionVertexTool', 1, 2],
+                    ['mActionReverseLine', 1, 3],
+                    ['mActionTrimExtendFeature', 1, 4],
+                    ['mActionMergeFeatures', 1, 5],
+                    ['mActionMergeFeatureAttributes', 1, 6],
+                    ['mActionSimplifyFeature', 1, 7],
+                    ['mActionCircularStringRadius', 1, 8],
+                    ['mActionCircle3Tangents', 1, 9],
+                    ['mActionCircle2TangentsPoint', 1, 10],
+                    [' ', 1, 11],
+                    ['mActionEllipseExtent', 1, 12],
+                    ['mActionEllipseFoci', 1, 13],
+                    ['mActionRectangle3PointsDistance', 1, 14],
+                    ['mActionRectangle3PointsProjected', 1, 15],
+                    ['mActionRegularPolygonCenterPoint', 1, 16],
+                    [' ', 1, 17],
+                    ['mActionDeleteRing', 1, 18],
+                    ['mActionDeletePart', 1, 19],
+                    ['mActionReshapeFeatures', 1, 20],
                 ]
             },
             
@@ -232,7 +281,7 @@ RIBBON_DEFAULT = [
            
         ]
     },
-
+    
     {
         "tab_name": tr("Vector"),
         "tab_id": "Vector",
@@ -253,7 +302,7 @@ RIBBON_DEFAULT = [
                     ['mProcessingUserMenu_qgis:eliminateselectedpolygons', 0, 4],
                 ]
             },
-
+            
             {
                 'label': tr('Geometry Tools'),
                 'id': 'Geometry Tools',

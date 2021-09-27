@@ -78,8 +78,8 @@ class ConfigSaveThread(QThread):
 class ConfigSaveProgressDialog(QProgressDialog):
     def __init__(self, parent=None):
         super(ConfigSaveProgressDialog, self).__init__(parent)
-        self.setWindowTitle('Zapisywanie ustawień')
-        self.setLabelText('Proszę czekać...')
+        self.setWindowTitle('Saving settings')
+        self.setLabelText('Please wait...')
         self.setMaximum(0)
         self.setCancelButton(None)
 
