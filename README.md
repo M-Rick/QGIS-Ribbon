@@ -9,5 +9,5 @@ The 'Show menu' feature works only on Windows and Linux since menus cannot be hi
 ## Customization of toolbar
 The plugin enables to personalize the toolbar by adding new tabs and sections.
 
-![Capture d’écran 2021-09-23 à 16 36 14](https://user-images.githubusercontent.com/2520948/134555391-68accf92-9cf9-49f5-a54f-613d6e117d64.png)
+![Capture d’écran 2021-09-28 à 15 55 17](https://user-images.githubusercontent.com/2520948/135101090-381d552a-5ef3-4ca9-8cc2-397ec175a7af.png)
 
